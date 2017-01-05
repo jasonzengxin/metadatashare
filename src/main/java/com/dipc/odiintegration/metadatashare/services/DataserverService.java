@@ -60,13 +60,19 @@ public class DataserverService {
 		b.end("topology");
 		b.end("transaction");
 	}
-	public void deleteDataServer(String dsName) {
+	public boolean deleteDataServer(String dsName) {
+		
+		if(getDataServerFinder().findByName(dsName) == null){
+			return false;
+		}
 		b.type("transaction");
 		b.type("topology");
 		b.type("remove_dataserver", b.p("name", dsName));
 		b.end();
 		b.end("topology");
 		b.end("transaction");
+		
+		return true;
 	}
 	
 	public void updateDataServer(DataserverInfo dsInfo){
