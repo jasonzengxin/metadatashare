@@ -11,7 +11,10 @@ import javax.ws.rs.core.MediaType;
 import com.dipc.odiintegration.metadatashare.models.DatastoreInfo;
 import com.dipc.odiintegration.metadatashare.services.DatastoreService;
 
+import io.swagger.annotations.Api;
+
 @Path("/datastores")
+@Api(value = "/datastores")
 public class DatastoreResource {
 
 	private DatastoreService ds = new DatastoreService();
