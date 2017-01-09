@@ -26,7 +26,7 @@ public class DataserverService {
 
 	}
 
-	public void createDataServer(DataserverInfo dsInfo) {
+	public DataserverInfo createDataServer(DataserverInfo dsInfo) {
 		b.type("transaction");
 		b.type("topology");
 
@@ -47,7 +47,7 @@ public class DataserverService {
 			b.end("dataserver");
 			b.end("topology");
 			b.end("transaction");
-			return;
+			return null;
 		}
 		b.end("dataserver");
 
@@ -66,6 +66,7 @@ public class DataserverService {
 
 		b.end("topology");
 		b.end("transaction");
+		return dsInfo;
 	}
 
 	public boolean deleteDataServer(String dsName) {
@@ -83,7 +84,10 @@ public class DataserverService {
 		return true;
 	}
 
-	public void updateDataServer(DataserverInfo dsInfo) {
+
+	public DataserverInfo updateDataServer(DataserverInfo dsInfo){
+		
+		
 		b.type("transaction");
 		b.type("topology");
 		b.type("remove_dataserver", b.p("name", dsInfo.getDataserverName()));
@@ -106,6 +110,7 @@ public class DataserverService {
 
 		b.end("topology");
 		b.end("transaction");
+		return dsInfo;
 	}
 
 	public List<DataserverInfo> getAllDataservers() {
