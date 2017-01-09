@@ -40,20 +40,25 @@ public class DataserverResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String addDataserver(DataserverInfo dsInfo){
-    	ds.createDataServer(dsInfo);
-    	return "data server "+ dsInfo.getDataserverName() +" is created";
+    @ApiOperation(value = "Add a new Dataserver")
+    @ApiResponses(value = { @ApiResponse(code = 405, message = "Invalid input") })
+    public Response addDataserver( @ApiParam(value = "dataserver object that needs to be added to the store", required = true)DataserverInfo dsInfo){
+    	DataserverInfo updatedDataserver = ds.createDataServer(dsInfo);
+    	return Response.ok().entity(updatedDataserver).build();
     }
     
     @PUT
     @Path("/{dataserverName}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-
-    public String updateDataserver(@PathParam("dataserverName") String dsName,DataserverInfo dsInfo){
+    @ApiOperation(value = "Update an existing dataserver")
+    @ApiResponses(value = { @ApiResponse(code = 400, message = "Invalid Name supplied"),
+        @ApiResponse(code = 404, message = "dataserver not found"),
+        @ApiResponse(code = 405, message = "Validation exception") })
+    public Response updateDataserver(@PathParam("dataserverName") String dsName,DataserverInfo dsInfo){
     	dsInfo.setDataserverName(dsName);
-    	ds.createDataServer(dsInfo);
-    	return "data server "+ dsName +" is update";
+    	DataserverInfo updatedDs = ds.updateDataServer(dsInfo);
+    	return Response.ok().entity(updatedDs).build();
     }
     
     
