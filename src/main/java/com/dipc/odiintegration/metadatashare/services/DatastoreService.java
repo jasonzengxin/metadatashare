@@ -1,9 +1,9 @@
 package com.dipc.odiintegration.metadatashare.services;
 
 import com.dipc.odiintegration.metadatashare.OdiReposGlobalHelper;
-import com.dipc.odiintegration.metadatashare.models.ColumnInfo;
-import com.dipc.odiintegration.metadatashare.models.DatastoreInfo;
-import com.dipc.odiintegration.metadatashare.models.KeyInfo;
+import com.dipc.odiintegration.metadatashare.models.odi.ColumnInfo;
+import com.dipc.odiintegration.metadatashare.models.odi.DatastoreInfo;
+import com.dipc.odiintegration.metadatashare.models.odi.KeyInfo;
 
 import oracle.odi.core.persistence.transaction.ITransactionStatus;
 import oracle.odi.core.persistence.transaction.support.ITransactionCallback;
@@ -48,22 +48,6 @@ public class DatastoreService {
 	public void createDataStore(DatastoreInfo dsInfo) {
 		b.type("transaction");
 		b.type("design");
-		
-		//if the logical schema does not exist, create one.
-		if(getLogicalSchemaFinder().findByName(dsInfo.getLogicalSchemaName()) == null){
-			b.type("topology");
-			b.type("logicalschema", b.p("technology", dsInfo.getTechnology()), b.p("name", dsInfo.getLogicalSchemaName()));
-			b.end();
-			b.end("topology");
-			
-		}
-		// if the model does not exist, create one.
-		if (getModelFinder().findByCode(dsInfo.getModelName()) == null) {
-			b.type("model", b.p("technology", dsInfo.getTechnology()),
-					b.p("logicalschema", dsInfo.getLogicalSchemaName()), b.p("name", dsInfo.getModelName()),
-					b.p("code", dsInfo.getModelName()));
-			b.end("model");
-		}
 		
 	    //create data store.    
 		b.type("model", b.p("technology", dsInfo.getTechnology()), b.p("logicalschema", dsInfo.getLogicalSchemaName()),

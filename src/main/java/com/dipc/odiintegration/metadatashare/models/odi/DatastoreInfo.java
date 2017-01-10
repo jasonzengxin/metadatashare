@@ -1,4 +1,4 @@
-package com.dipc.odiintegration.metadatashare.models;
+package com.dipc.odiintegration.metadatashare.models.odi;
 
 import java.util.List;
 
@@ -13,6 +13,9 @@ public class DatastoreInfo {
 	private List<ColumnInfo> columnInfoList;
 	private List<KeyInfo> keyInfoList;
 	private String modelName;
+	
+	
+	
 	public String getTechnology() {
 		return technology;
 	}

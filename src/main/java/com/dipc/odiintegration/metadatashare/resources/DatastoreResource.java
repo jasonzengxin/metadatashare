@@ -8,7 +8,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.dipc.odiintegration.metadatashare.models.DatastoreInfo;
+import com.dipc.odiintegration.metadatashare.models.odi.DatastoreInfo;
 import com.dipc.odiintegration.metadatashare.services.DatastoreService;
 
 import io.swagger.annotations.Api;

@@ -12,7 +12,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
-import com.dipc.odiintegration.metadatashare.models.DataserverInfo;
+
+import com.dipc.odiintegration.metadatashare.models.odi.DataserverInfo;
 import com.dipc.odiintegration.metadatashare.services.DataserverService;
 
 import io.swagger.annotations.Api;

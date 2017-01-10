@@ -2,7 +2,7 @@ package com.dipc.odiintegration.metadatashare.models;
 
 public class SchemaInfo {
 	private String name;
-	private ConnectionInfo defaultConnection;
+	private Connection defaultConnection;
 	private String workSchemaName;
 	
 	
@@ -12,10 +12,10 @@ public class SchemaInfo {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public ConnectionInfo getDefaultConnection() {
+	public Connection getDefaultConnection() {
 		return defaultConnection;
 	}
-	public void setDefaultConnection(ConnectionInfo defaultConnection) {
+	public void setDefaultConnection(Connection defaultConnection) {
 		this.defaultConnection = defaultConnection;
 	}
 	public String getWorkSchemaName() {

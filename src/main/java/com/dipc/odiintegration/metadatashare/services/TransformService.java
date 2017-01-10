@@ -5,8 +5,8 @@ import java.util.List;
 
 import com.dipc.odiintegration.metadatashare.models.Connection;
 import com.dipc.odiintegration.metadatashare.models.ConnectionInfo;
-import com.dipc.odiintegration.metadatashare.models.DataserverInfo;
-import com.dipc.odiintegration.metadatashare.models.PhysicalSchemaInfo;
+import com.dipc.odiintegration.metadatashare.models.odi.DataserverInfo;
+import com.dipc.odiintegration.metadatashare.models.odi.PhysicalSchemaInfo;
 
 public class TransformService {
 
@@ -20,6 +20,7 @@ public class TransformService {
 		dsInfo.setDsUsername(connInfo.getPassword());
 		dsInfo.setTechnology(connInfo.getPlateform());
 		PhysicalSchemaInfo physicalSchema = new PhysicalSchemaInfo();
+		physicalSchema.setPhysicalWorkSchemaName(connInfo.getDefaultSchema().getWorkSchemaName());
 		physicalSchema.setPhysicalSchemaName(connInfo.getDefaultSchema().getName());
 		List<PhysicalSchemaInfo> physicalSchemaList = new ArrayList<PhysicalSchemaInfo>();
 		physicalSchemaList.add(physicalSchema);

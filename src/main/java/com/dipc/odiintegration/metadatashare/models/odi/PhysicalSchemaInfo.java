@@ -1,4 +1,4 @@
-package com.dipc.odiintegration.metadatashare.models;
+package com.dipc.odiintegration.metadatashare.models.odi;
 
 import javax.xml.bind.annotation.XmlRootElement;
 

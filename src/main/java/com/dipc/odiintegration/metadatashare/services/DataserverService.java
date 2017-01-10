@@ -6,8 +6,8 @@ import java.util.List;
 
 import com.dipc.odiintegration.metadatashare.OdiReposGlobalHelper;
 import com.dipc.odiintegration.metadatashare.models.Connection;
-import com.dipc.odiintegration.metadatashare.models.DataserverInfo;
-import com.dipc.odiintegration.metadatashare.models.PhysicalSchemaInfo;
+import com.dipc.odiintegration.metadatashare.models.odi.DataserverInfo;
+import com.dipc.odiintegration.metadatashare.models.odi.PhysicalSchemaInfo;
 
 import oracle.odi.domain.topology.OdiDataServer;
 import oracle.odi.domain.topology.OdiPhysicalSchema;
@@ -17,15 +17,50 @@ import oracle.odi.scripting.odibuilder.JOdiBuilder;
 public class DataserverService {
 	JOdiBuilder b = OdiReposGlobalHelper.getInstance().getOdiBuilder();
 	private TransformService transform = new TransformService();
-	public void createDataServer(Connection connect) {
-
+	
+	/**
+	 * Create a new dataserver according to a new connection
+	 * 
+	 * @param connect
+	 */
+	public DataserverInfo createDataServer(Connection connect) {
+		DataserverInfo newDataserver = null;
 		OdiDataServer dataServer = getDataServerFinder().findByName(connect.getName());
 		if (dataServer == null) {
-			createDataServer(transform.fromConnectionToDataserver(connect));
+			newDataserver = createDataServer(transform.fromConnectionToDataserver(connect));
 		}
-
+		return newDataserver;
 	}
 
+	/**
+	 * Update an existing dataserver according to a updated connection
+	 * 
+	 * @param connect
+	 */
+	public DataserverInfo updateDataServer(Connection connect) {
+		DataserverInfo updatedDataServer = null;
+		OdiDataServer dataServer = getDataServerFinder().findByName(connect.getName());
+		if (dataServer != null) {
+			updatedDataServer = updateDataServer(transform.fromConnectionToDataserver(connect));
+		}
+		return updatedDataServer;
+	}
+	
+	public boolean deleteDataServer(String connectionName) {
+		String dataserverName = connectionName;
+		if (getDataServerFinder().findByName(dataserverName) == null) {
+			return false;
+		}
+		b.type("transaction");
+		b.type("topology");
+		b.type("remove_dataserver", b.p("name", dataserverName));
+		b.end();
+		b.end("topology");
+		b.end("transaction");
+		return true;
+	}
+	
+	
 	public DataserverInfo createDataServer(DataserverInfo dsInfo) {
 		b.type("transaction");
 		b.type("topology");
@@ -69,31 +104,21 @@ public class DataserverService {
 		return dsInfo;
 	}
 
-	public boolean deleteDataServer(String dsName) {
-
-		if (getDataServerFinder().findByName(dsName) == null) {
-			return false;
-		}
-		b.type("transaction");
-		b.type("topology");
-		b.type("remove_dataserver", b.p("name", dsName));
-		b.end();
-		b.end("topology");
-		b.end("transaction");
-
-		return true;
-	}
 
 
 	public DataserverInfo updateDataServer(DataserverInfo dsInfo){
 		
-		
+		//remove the old dataserver
 		b.type("transaction");
 		b.type("topology");
 		b.type("remove_dataserver", b.p("name", dsInfo.getDataserverName()));
 		b.end();
+		b.end("topology");
+		b.end("transaction");
 
 		// create dataserver and physical schema
+		b.type("transaction");
+		b.type("topology");
 		b.type("dataserver", b.p("technology", "ORACLE"), b.p("name", dsInfo.getDataserverName()));
 		b.type("jdbcconnection", b.p("driver", "oracle.jdbc.driver.OracleDriver"),
 				b.p("url", dsInfo.getDataserverUrl()));

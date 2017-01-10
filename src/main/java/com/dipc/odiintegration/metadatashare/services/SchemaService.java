@@ -4,6 +4,7 @@ import java.sql.SQLIntegrityConstraintViolationException;
 
 import com.dipc.odiintegration.metadatashare.OdiReposGlobalHelper;
 import com.dipc.odiintegration.metadatashare.models.Schema;
+import com.dipc.odiintegration.metadatashare.models.SchemaInfo;
 
 import oracle.odi.core.persistence.IOdiEntityManager;
 import oracle.odi.core.persistence.transaction.ITransactionStatus;
@@ -59,19 +60,48 @@ public class SchemaService {
 		b.end("transaction");
 	}
 
-	public void addSchema(Schema schema) {
-		if(schema.getApplicationProperties().getDefaultConnection() != null){
-			OdiDataServer dataserver  = dataserverService.getDataServerFinder().findByName(schema.getApplicationProperties().getDefaultConnection().getName());
-			if(dataserver != null){
+	public SchemaInfo addSchema(Schema schema) {
+		// create logical schema and model for this schema
+		SchemaInfo schemaInfo =  schema.getApplicationProperties();
+		createLogicalAndModel(schema.getName(),
+				schemaInfo.getDefaultConnection().getApplicationProperties().getPlateform());
+		 
+		if (schema.getApplicationProperties().getDefaultConnection() != null) {// default
+																				// connection
+																				// already
+																				// existed
+			OdiDataServer dataserver = dataserverService.getDataServerFinder()
+					.findByName(schema.getApplicationProperties().getDefaultConnection().getName());
+			if (dataserver != null) {
 				OdiPhysicalSchema oraclePhysicalSchema = new OdiPhysicalSchema(dataserver);
-				
+
 				// Set additional information on the schema
 				oraclePhysicalSchema.setSchemaName(schema.getApplicationProperties().getName());
 				oraclePhysicalSchema.setWorkSchemaName(schema.getApplicationProperties().getWorkSchemaName());
 				persistEntity(dataserver);
+				
+			} else {// create dataserver if it's not already exist. schema will be added as well
+				dataserverService.createDataServer(schema.getApplicationProperties().getDefaultConnection());
+			}
+			return schemaInfo;
+		}
+		return null;
+	}
+
+	public void removeSchema(String connectionName, String schemaName) {
+		OdiDataServer dataserver = dataserverService.getDataServerFinder().findByName(connectionName);
+		
+		if(dataserver != null){
+			for (OdiPhysicalSchema physicalSchema : dataserver.getPhysicalSchemas()) {
+				if (physicalSchema.getSchemaName().equals(schemaName)) {
+					dataserver.removePhysicalSchema(physicalSchema);
+				}
 			}
 		}
+		
 	}
+
+
 
 	protected IOdiLogicalSchemaFinder getLogicalSchemaFinder() {
 		return (IOdiLogicalSchemaFinder) b.getOdiInstance().getTransactionalEntityManager()
@@ -81,24 +111,21 @@ public class SchemaService {
 	protected IOdiModelFinder getModelFinder() {
 		return (IOdiModelFinder) b.getOdiInstance().getTransactionalEntityManager().getFinder(OdiModel.class);
 	}
-	private void persistEntity(final IOdiEntity rEntity) 
-	{
+
+	private void persistEntity(final IOdiEntity rEntity) {
 		TransactionTemplate transaction = new TransactionTemplate(b.getOdiInstance().getTransactionManager());
-		try
-		{
-			transaction.execute(new TransactionCallbackWithoutResult()
-			{
-				public void doInTransactionWithoutResult(ITransactionStatus pStatus)
-				{
+		try {
+			transaction.execute(new TransactionCallbackWithoutResult() {
+				public void doInTransactionWithoutResult(ITransactionStatus pStatus) {
 					IOdiEntityManager entityManager = b.getOdiInstance().getTransactionalEntityManager();
 					entityManager.persist(rEntity);
 				}
 			});
 		}
-		
-		//	Ignore integrity constraint violations (entity already exists):
-		catch(UncategorizedRepositoryAccessException e) {
-			if ( ! (e.getCause() instanceof SQLIntegrityConstraintViolationException) ) {
+
+		// Ignore integrity constraint violations (entity already exists):
+		catch (UncategorizedRepositoryAccessException e) {
+			if (!(e.getCause() instanceof SQLIntegrityConstraintViolationException)) {
 				throw e;
 			}
 		}
