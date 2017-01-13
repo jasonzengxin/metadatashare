@@ -6,34 +6,37 @@ import com.dipc.odiintegration.metadatashare.models.odi.ColumnInfo;
 import com.dipc.odiintegration.metadatashare.models.odi.KeyInfo;
 
 public class DataEntityInfo {
-	private String name;
-	private Schema schema;
-	private List<ColumnInfo> attributes;
-	private List<KeyInfo> keys;
+
 	
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public Schema getSchema() {
-		return schema;
-	}
-	public void setSchema(Schema schema) {
-		this.schema = schema;
-	}
-	public List<ColumnInfo> getAttributes() {
-		return attributes;
-	}
-	public void setAttributes(List<ColumnInfo> attributes) {
-		this.attributes = attributes;
-	}
-	public List<KeyInfo> getKeys() {
-		return keys;
-	}
-	public void setKeys(List<KeyInfo> keys) {
-		this.keys = keys;
-	}
+	private String technology;
+	private Schema parentSchema;
+	private List<ColumnInfo> columnInfoList;
+	private List<KeyInfo> keyInfoList;
 	
+	public String getTechnology() {
+		return technology;
+	}
+	public void setTechnology(String technology) {
+		this.technology = technology;
+	}
+	public Schema getParentSchema() {
+		return parentSchema;
+	}
+	public void setParentSchema(Schema parentSchema) {
+		this.parentSchema = parentSchema;
+	}
+	public List<ColumnInfo> getColumnInfoList() {
+		return columnInfoList;
+	}
+	public void setColumnInfoList(List<ColumnInfo> columnInfoList) {
+		this.columnInfoList = columnInfoList;
+	}
+	public List<KeyInfo> getKeyInfoList() {
+		return keyInfoList;
+	}
+	public void setKeyInfoList(List<KeyInfo> keyInfoList) {
+		this.keyInfoList = keyInfoList;
+	}
+
 }
+

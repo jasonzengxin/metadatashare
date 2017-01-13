@@ -1,14 +1,7 @@
 package com.dipc.odiintegration.metadatashare;
 
-import oracle.odi.scripting.odibuilder.* ;
 import oracle.odi.core.OdiInstance;
-import oracle.odi.core.config.MasterRepositoryDbInfo;
-import oracle.odi.core.config.OdiInstanceConfig;
-import oracle.odi.core.config.PoolingAttributes;
-import oracle.odi.core.config.WorkRepositoryDbInfo;
-import oracle.odi.core.security.Authentication;
-import oracle.odi.domain.topology.OdiTechnology;
-import oracle.odi.scripting.ETLHelper;
+import oracle.odi.scripting.odibuilder.JOdiBuilder;
 
 public class OdiGlobalHelper {
 

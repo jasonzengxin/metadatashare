@@ -1,8 +1,10 @@
 package com.dipc.odiintegration.metadatashare.models;
 
 public class Schema {
+	
 	private String name;
 	private SchemaInfo applicationProperties;
+	
 	public String getName() {
 		return name;
 	}

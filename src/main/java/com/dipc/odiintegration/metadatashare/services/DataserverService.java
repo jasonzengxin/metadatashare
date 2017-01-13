@@ -147,10 +147,16 @@ public class DataserverService {
 			newds.setDataserverUrl(ds.getConnectionSettings().getJdbcUrl());
 			newds.setDsUsername(ds.getUsername());
 			// newds.setDsPwd(ds.getPassword().toString());
+			List<PhysicalSchemaInfo> schemaList = new ArrayList<PhysicalSchemaInfo>();
 			for (OdiPhysicalSchema physicalSchema : ds.getPhysicalSchemas()) {
+				PhysicalSchemaInfo schemaInfo = new PhysicalSchemaInfo();
+				schemaInfo.setPhysicalSchemaName(physicalSchema.getName());
+				schemaInfo.setPhysicalWorkSchemaName(physicalSchema.getWorkSchemaName());
+				schemaList.add(schemaInfo);
 				// newds.setPhysicalSchemaName(physicalSchema.getName());
 				// newds.setPhysicalWorkSchemaName(physicalSchema.getWorkSchemaName());
 			}
+			newds.setPhysicalSchemas(schemaList);
 			dsList.add(newds);
 
 		}

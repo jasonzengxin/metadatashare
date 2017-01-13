@@ -5,27 +5,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class ConnectionInfo {
 
-	private String name;
-	private SchemaInfo defaultSchema;
+
+	private Schema defaultSchema;
 	private String plateform;
 	private String username;
 	private String password;
 	private String url;
 	private ConnectionTypeInfo connectionType;
 
-	public String getName() {
-		return name;
-	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public SchemaInfo getDefaultSchema() {
+	public Schema getDefaultSchema() {
 		return defaultSchema;
 	}
 
-	public void setDefaultSchema(SchemaInfo defaultSchema) {
+	public void setDefaultSchema(Schema defaultSchema) {
 		this.defaultSchema = defaultSchema;
 	}
 

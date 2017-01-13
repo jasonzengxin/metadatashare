@@ -21,12 +21,7 @@ public class DataserverInfo {
 	public DataserverInfo(String dataserverName){
 		this.dataserverName = dataserverName;
 	}
-//	public String getLogicalSchemaName() {
-//		return logicalSchemaName;
-//	}
-//	public void setLogicalSchemaName(String logicalSchemaName) {
-//		this.logicalSchemaName = logicalSchemaName;
-//	}
+
 	public String getTechnology() {
 		return technology;
 	}

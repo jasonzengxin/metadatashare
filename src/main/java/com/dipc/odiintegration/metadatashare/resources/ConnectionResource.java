@@ -32,7 +32,7 @@ public class ConnectionResource {
 	@ApiOperation(value = "Create a new Dataserver according to the new connection")
 	@ApiResponses(value = { @ApiResponse(code = 405, message = "Invalid input") })
 	public Response addConnection(Connection connection) {
-		connection.getApplicationProperties().setName(connection.getName());
+
 		DataserverInfo createdDs =dataserverService.createDataServer(connection);
 		return Response.ok().entity(createdDs).build();
 	}
@@ -46,7 +46,7 @@ public class ConnectionResource {
 			@ApiResponse(code = 404, message = "The corresponding dataserver not found"),
 			@ApiResponse(code = 405, message = "Validation exception") })
 	public Response updateDataserver(@PathParam("connectionName") String connectionName, Connection connection) {
-		connection.getApplicationProperties().setName(connection.getName());
+
 		DataserverInfo updatedDs = dataserverService.updateDataServer(connection);
 		return Response.ok().entity(updatedDs).build();
 	}
