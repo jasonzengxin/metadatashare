@@ -32,11 +32,11 @@ public class SchemaResource {
 	@ApiOperation(value = "Create a new physical/logical schemas amd Model according to the new schema in DIPC")
 	@ApiResponses(value = { @ApiResponse(code = 405, message = "Invalid input") })
 	public Response addSchema(Schema schema) {
-		schema.getApplicationProperties().setName(schema.getName());
+
 		SchemaInfo updatedSchema = schemaService.addSchema(schema);
 		return Response.ok().entity(updatedSchema).build();
 	}
-	
+	 
 	@DELETE
 	@Path("/{connectionName}/{schemaName}")
     @Consumes(MediaType.APPLICATION_JSON)

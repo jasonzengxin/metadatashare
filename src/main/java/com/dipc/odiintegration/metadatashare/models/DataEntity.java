@@ -1,9 +1,10 @@
 package com.dipc.odiintegration.metadatashare.models;
 
-public class Schema {
-	
+public class DataEntity {
+
 	private String name;
-	private SchemaInfo applicationProperties;
+	private DataEntityInfo applicationProperties;
+	
 	
 	public String getName() {
 		return name;
@@ -11,10 +12,10 @@ public class Schema {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public SchemaInfo getApplicationProperties() {
+	public DataEntityInfo getApplicationProperties() {
 		return applicationProperties;
 	}
-	public void setApplicationProperties(SchemaInfo applicationProperties) {
+	public void setApplicationProperties(DataEntityInfo applicationProperties) {
 		this.applicationProperties = applicationProperties;
 	}
 	
