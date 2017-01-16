@@ -14,6 +14,9 @@ import com.dipc.odiintegration.metadatashare.models.odi.PhysicalSchemaInfo;
 
 public class TransformService {
 
+	
+	private final String logicSchemaPrefix = "LS";
+	private final String modelPrefix = "MOD";
 	/**
 	 * Convert a Connection in DIPC side to a Dataserver in ODI side.
 	 * 
@@ -53,6 +56,8 @@ public class TransformService {
 		DatastoreInfo dsInfo = new DatastoreInfo();
 		DataEntityInfo dataEntityInfo = dataEntity.getApplicationProperties();
 		dsInfo.setName(dataEntity.getName());
+		dsInfo.setModelName(generateModelName(dataEntityInfo.getParentSchema().getName()));
+		dsInfo.setLogicalSchemaName(generateLogicSchemaName(dataEntityInfo.getParentSchema().getName()));
 		dsInfo.setTechnology(dataEntityInfo.getTechnology());
 		dsInfo.setColumnInfoList(dataEntityInfo.getColumnInfoList());
 		dsInfo.setKeyInfoList(dataEntityInfo.getKeyInfoList());
@@ -74,5 +79,13 @@ public class TransformService {
 		return phySchemaInfo;
 	}
 	
+	public String generateLogicSchemaName(String dipcSchemaname) {
+		return logicSchemaPrefix + "_" + dipcSchemaname;
+	}
+
+	public String generateModelName(String dipcSchemaname) {
+		return modelPrefix + "_" + dipcSchemaname;
+	}
+
 	 
 }

@@ -25,7 +25,6 @@ import oracle.odi.scripting.odibuilder.JOdiBuilder;
 public class DatastoreService {
 	JOdiBuilder b = OdiReposGlobalHelper.getInstance().getOdiBuilder();
 	private TransformService transform = new TransformService();
-	private SchemaService schemaService = new SchemaService();
 
 	/**
 	 * Update an existing dataserver according to a updated connection
@@ -91,7 +90,7 @@ public class DatastoreService {
 
 	public DatastoreInfo createDataStore(DataEntity dataEntity) {
 		DatastoreInfo newDatastore = null;
-		String modelName = schemaService
+		String modelName = transform
 				.generateModelName(dataEntity.getApplicationProperties().getParentSchema().getName());
 
 		OdiDataStore dataStore = getDataStoreFinder().findByName(dataEntity.getName(), modelName);
@@ -133,7 +132,7 @@ public class DatastoreService {
 	}
 
 	public boolean deleteDataStore(String schemaName, final String datastoreName) {
-		final String modelName = schemaService.generateModelName(schemaName);
+		final String modelName = transform.generateModelName(schemaName);
 		final OdiDataStore ds = getDataStoreFinder().findByName(datastoreName, modelName);
 		if(ds == null){
 			return false;

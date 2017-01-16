@@ -32,23 +32,15 @@ public class SchemaService {
 	private static OdiPhysicalSchema updatedSchema = null;
 	JOdiBuilder b = OdiReposGlobalHelper.getInstance().getOdiBuilder();
 	private DataserverService dataserverService = new DataserverService();
+	private TransformService transform = new TransformService();
 
-	private final String logicSchemaPrefix = "LS";
-	private final String modelPrefix = "MOD";
 	private final String globalContextName = "GLOBAL";
 
-	protected String generateLogicSchemaName(String dipcSchemaname) {
-		return logicSchemaPrefix + "_" + dipcSchemaname;
-	}
-
-	protected String generateModelName(String dipcSchemaname) {
-		return modelPrefix + "_" + dipcSchemaname;
-	}
 
 	public void createLogicalAndModel(Schema schema) {
 
-		String logicalSchemaName = generateLogicSchemaName(schema.getName());
-		String modelName = generateModelName(schema.getName());
+		String logicalSchemaName = transform.generateLogicSchemaName(schema.getName());
+		String modelName = transform.generateModelName(schema.getName());
 		SchemaInfo schemaInfo = schema.getApplicationProperties();
 
 		b.type("transaction");
@@ -199,7 +191,7 @@ public class SchemaService {
 
 		// update context
 		OdiContextualSchemaMapping contextMapping = getContextualSchemaMappingFinder()
-				.findByLogicalSchema(generateLogicSchemaName(schema.getName()), globalContextName);
+				.findByLogicalSchema(transform.generateLogicSchemaName(schema.getName()), globalContextName);
 		OdiDataServer dataServer = contextMapping.getPhysicalSchema().getDataServer();
 		// if the default connection is changed, the physical-logical
 		// relationship needs to be updated.
