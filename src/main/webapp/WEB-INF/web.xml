@@ -10,7 +10,7 @@
       <param-name>jersey.config.server.provider.packages</param-name>
       <param-value>
       io.swagger.jaxrs.listing,
-      com.dipc.odiintegration.metadatashare</param-value>
+      oracle.dicloud.odi.metadatashare.resources</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
@@ -31,4 +31,27 @@
     <servlet-name>ODI-Integration Web Application</servlet-name>
     <url-pattern>/metadata-share/*</url-pattern>
   </servlet-mapping>
+
+  <resource-ref>
+     <res-ref-name>jdbc/odiMasterRepository</res-ref-name>
+    <res-type>javax.sql.DataSource</res-type>
+    <res-auth>Container</res-auth>
+ </resource-ref>
+ 
+ <context-param>
+    <param-name>jndiMasterRepos</param-name>
+    <param-value>java:comp/env/jdbc/odiMasterRepository</param-value>
+</context-param>
+<context-param>
+    <param-name>workReposName</param-name>
+    <param-value>DICLOUD_WORK</param-value>
+</context-param>
+<context-param>
+    <param-name>odiUsername</param-name>
+    <param-value>SUPERVISOR</param-value>
+</context-param>
+<context-param>
+    <param-name>odiPassword</param-name>
+    <param-value>welcome1</param-value>
+</context-param>
 </web-app>
