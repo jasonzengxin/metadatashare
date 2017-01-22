@@ -17,12 +17,10 @@ import oracle.odi.core.repository.UncategorizedRepositoryAccessException;
 import oracle.odi.domain.IOdiEntity;
 import oracle.odi.domain.model.OdiModel;
 import oracle.odi.domain.model.finder.IOdiModelFinder;
-import oracle.odi.domain.topology.OdiContext;
 import oracle.odi.domain.topology.OdiContextualSchemaMapping;
 import oracle.odi.domain.topology.OdiDataServer;
 import oracle.odi.domain.topology.OdiLogicalSchema;
 import oracle.odi.domain.topology.OdiPhysicalSchema;
-import oracle.odi.domain.topology.finder.IOdiContextFinder;
 import oracle.odi.domain.topology.finder.IOdiContextualSchemaMappingFinder;
 import oracle.odi.domain.topology.finder.IOdiLogicalSchemaFinder;
 import oracle.odi.domain.topology.finder.IOdiPhysicalSchemaFinder;
@@ -144,6 +142,7 @@ public class SchemaService {
 
 	protected void removePhysicalSchema(String schemaName) {
 		// remove the corresponding to physical schema in ODI
+		@SuppressWarnings("unchecked")
 		ArrayList<OdiPhysicalSchema> schemas = (ArrayList<OdiPhysicalSchema>) getPhysicalSchemaFinder().findAll();
 		for (OdiPhysicalSchema physicalSchema : schemas) {
 			if (physicalSchema.getSchemaName().equals(schemaName)) {

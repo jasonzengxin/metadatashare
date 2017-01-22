@@ -7,7 +7,10 @@ import com.dipc.odiintegration.metadatashare.models.Connection;
 import com.dipc.odiintegration.metadatashare.models.ConnectionInfo;
 import com.dipc.odiintegration.metadatashare.models.DataEntity;
 import com.dipc.odiintegration.metadatashare.models.DataEntityInfo;
+import com.dipc.odiintegration.metadatashare.models.ExecConfig;
+import com.dipc.odiintegration.metadatashare.models.ExecConfigInfo;
 import com.dipc.odiintegration.metadatashare.models.Schema;
+import com.dipc.odiintegration.metadatashare.models.odi.ContextInfo;
 import com.dipc.odiintegration.metadatashare.models.odi.DataserverInfo;
 import com.dipc.odiintegration.metadatashare.models.odi.DatastoreInfo;
 import com.dipc.odiintegration.metadatashare.models.odi.PhysicalSchemaInfo;
@@ -64,6 +67,17 @@ public class TransformService {
 		
 		return dsInfo;
 	}
+	
+	public ContextInfo fromExecConifgToContext(ExecConfig execConfig){
+		
+		ContextInfo contextInfo = new ContextInfo();
+		contextInfo.setLogicalSchemaName(generateLogicSchemaName(execConfig.getApplicationProperties().getSchemaName()));
+		contextInfo.setPhysicalSchemaName(execConfig.getApplicationProperties().getSchemaName());
+		contextInfo.setTechnology(execConfig.getApplicationProperties().getPlateform());
+        contextInfo.setDataServerName(execConfig.getApplicationProperties().getConnectionName());
+		return contextInfo;
+	}
+	
 	
 	/**
 	 * Convert a Schema in DIPC to a Physical Schema in ODI.

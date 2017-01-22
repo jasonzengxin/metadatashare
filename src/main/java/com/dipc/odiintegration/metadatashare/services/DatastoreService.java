@@ -1,14 +1,10 @@
 package com.dipc.odiintegration.metadatashare.services;
 
 import com.dipc.odiintegration.metadatashare.OdiReposGlobalHelper;
-import com.dipc.odiintegration.metadatashare.models.Connection;
 import com.dipc.odiintegration.metadatashare.models.DataEntity;
-import com.dipc.odiintegration.metadatashare.models.DataEntityInfo;
 import com.dipc.odiintegration.metadatashare.models.odi.ColumnInfo;
-import com.dipc.odiintegration.metadatashare.models.odi.DataserverInfo;
 import com.dipc.odiintegration.metadatashare.models.odi.DatastoreInfo;
 import com.dipc.odiintegration.metadatashare.models.odi.KeyInfo;
-import com.dipc.odiintegration.metadatashare.models.odi.PhysicalSchemaInfo;
 
 import oracle.odi.core.persistence.transaction.ITransactionStatus;
 import oracle.odi.core.persistence.transaction.support.ITransactionCallback;
@@ -17,7 +13,6 @@ import oracle.odi.domain.model.OdiDataStore;
 import oracle.odi.domain.model.OdiModel;
 import oracle.odi.domain.model.finder.IOdiDataStoreFinder;
 import oracle.odi.domain.model.finder.IOdiModelFinder;
-import oracle.odi.domain.topology.OdiDataServer;
 import oracle.odi.domain.topology.OdiLogicalSchema;
 import oracle.odi.domain.topology.finder.IOdiLogicalSchemaFinder;
 import oracle.odi.scripting.odibuilder.JOdiBuilder;

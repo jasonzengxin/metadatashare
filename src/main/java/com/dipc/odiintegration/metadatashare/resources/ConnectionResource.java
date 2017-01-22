@@ -57,7 +57,7 @@ public class ConnectionResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "Delete a dataserver according to a removed connection")
 	@ApiResponses(value = { @ApiResponse(code = 400, message = "Invalid Name supplied"),
-			@ApiResponse(code = 404, message = "Datasever not found") })
+			@ApiResponse(code = 404, message = "Dataserver not found") })
 	public Response deleteDataserver(
 			@ApiParam(value = "Dataserver name to delete", required = true) @PathParam("connectionName") String connectionName) {
 		if (dataserverService.deleteDataServer(connectionName)) {

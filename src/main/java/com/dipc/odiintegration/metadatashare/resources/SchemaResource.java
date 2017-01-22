@@ -30,7 +30,7 @@ public class SchemaResource {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	@ApiOperation(value = "Create a new physical/logical schemas amd Model according to the new schema in DIPC")
+	@ApiOperation(value = "Create a new physical/logical schemas and Model according to the new schema in DIPC")
 	@ApiResponses(value = { @ApiResponse(code = 405, message = "Invalid input") })
 	public Response addSchema(Schema schema) {
 
@@ -42,7 +42,7 @@ public class SchemaResource {
 	@Path("/{schemaName}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	@ApiOperation(value = "Update an existing dataserver")
+	@ApiOperation(value = "Update an existing physical/logical schema and context according to the updated schema in DIPC")
 	@ApiResponses(value = {
 			@ApiResponse(code = 400, message = "Update an existing dataStore according to the updated data entity"),
 			@ApiResponse(code = 404, message = "The corresponding datastore not found"),
@@ -57,6 +57,9 @@ public class SchemaResource {
 	@Path("/{connectionName}/{schemaName}")
     @Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
+	@ApiOperation(value = "Delete the existing physical/logical schema and context according to a removed schema in DIPC")
+	@ApiResponses(value = { @ApiResponse(code = 400, message = "Invalid Name supplied"),
+			@ApiResponse(code = 404, message = "Physical schema is not found") })
 	public String deleteSchema(@PathParam("connectionName") String connectionName,@PathParam("schemaName") String schemaName) {
 
 		schemaService.removeSchema(connectionName, schemaName);

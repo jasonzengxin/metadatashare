@@ -29,7 +29,7 @@ public class DataEntityResource {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	@ApiOperation(value = "Create a new dataStore according to the new dataEntiy")
+	@ApiOperation(value = "Create a new dataStore according to the new data entiy")
 	@ApiResponses(value = { @ApiResponse(code = 405, message = "Invalid input") })
 	public Response addDataStore(DataEntity dataEntity) {
 		DatastoreInfo newDatastore = datastoreService.createDataStore(dataEntity);
@@ -40,7 +40,7 @@ public class DataEntityResource {
 	@Path("/{dataEntityName}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	@ApiOperation(value = "Update an existing dataserver")
+	@ApiOperation(value = "Update an existing dataserver according to a given data entity")
 	@ApiResponses(value = {
 			@ApiResponse(code = 400, message = "Update an existing dataStore according to the updated data entity"),
 			@ApiResponse(code = 404, message = "The corresponding datastore not found"),
